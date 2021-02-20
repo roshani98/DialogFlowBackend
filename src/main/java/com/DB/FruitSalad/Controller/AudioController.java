@@ -2,8 +2,6 @@ package com.DB.FruitSalad.Controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.System.Logger;
-import java.nio.file.Path;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
