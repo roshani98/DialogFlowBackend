@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-DialogFlowSpringApplication<DialogFlowSpringApplication>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.DB.FruitSalad.DialogFlowSpringApplication",
+            "projectName": "DialogFlowSpringApplication",
+            "args": ""
+        }
+    ]
+}
