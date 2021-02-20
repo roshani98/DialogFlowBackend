@@ -1,7 +1,13 @@
 package com.DB.FruitSalad.Controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.System.Logger;
+import java.nio.file.Path;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.google.cloud.dialogflow.v2.AudioEncoding;
 import com.google.cloud.dialogflow.v2.DetectIntentRequest;
@@ -21,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import jdk.internal.jline.internal.Log;
-
 @RestController
 public class AudioController {
     @GetMapping("/test")
@@ -32,21 +36,27 @@ public class AudioController {
 
     @PostMapping("/audioTest")
     public ResponseEntity<byte[]> audioInputTest(@RequestPart("file") MultipartFile audioFile) {
-        System.out.println("Before try");
         try {
             ByteString byteString = ByteString.copyFrom(audioFile.getBytes());
-            System.out.println("Here\n"+byteString);
-System.out.println(byteString.toStringUtf8());
+            // System.out.println(byteString);
+            File file = new File("temp");
+            file.createNewFile();
+            audioFile.transferTo(file);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            System.out.println(audioStream.toString());
             return new ResponseEntity<>(audioFile.getBytes(), HttpStatus.ACCEPTED);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/audioInput")
-    public ResponseEntity<QueryResult> audioInput(@RequestPart("file") MultipartFile audioFile) throws IOException {
+    @PostMapping("/audioToDialogFlow")
+    public ResponseEntity<Void> audioToDialogFlow(@RequestPart("file") MultipartFile audioFile) throws IOException {
         try (SessionsClient sessionsClient = SessionsClient.create()) {
             // Set the session name using the sessionId (UUID) and projectID (my-project-id)
             SessionName session = SessionName.of("MarysBikeShop", "45033770-9df7-f35e-707e-f3ad5e4992b7");
@@ -86,7 +96,8 @@ System.out.println(byteString.toStringUtf8());
                     queryResult.getIntentDetectionConfidence());
             System.out.format("Fulfillment Text: '%s'\n", queryResult.getFulfillmentText());
 
-            return new ResponseEntity<>(queryResult, HttpStatus.ACCEPTED);
+
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 }
