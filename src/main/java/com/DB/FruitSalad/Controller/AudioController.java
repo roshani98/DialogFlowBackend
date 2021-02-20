@@ -1,7 +1,6 @@
 package com.DB.FruitSalad.Controller;
 
 import java.io.IOException;
-import java.lang.System.Logger;
 
 import com.google.cloud.dialogflow.v2.AudioEncoding;
 import com.google.cloud.dialogflow.v2.DetectIntentRequest;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import jdk.internal.jline.internal.Log;
 
 @RestController
 public class AudioController {
