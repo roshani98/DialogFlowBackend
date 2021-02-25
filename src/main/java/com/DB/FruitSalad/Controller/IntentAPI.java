@@ -21,8 +21,6 @@ import java.util.Map;
 @RestController
 public class IntentAPI {
 
-    private static String agentName;
-
     // DialogFlow API Detect Intent sample with text inputs.
     public static Map<String, QueryResult> detectIntent(
             String projectId,
@@ -94,9 +92,16 @@ public class IntentAPI {
     }
 
     @PostMapping(value="/v1/setStatus")
-    public void setStatus(@RequestParam boolean value){
-        if(value) agentName = AppConstants.FORM_AGENT;
-        else agentName = AppConstants.MANUAL_OR_AUDIO_AGENT;
+    public boolean setStatus(@RequestParam String query) throws IOException{
+        boolean val = false;
+        Map<String, QueryResult> result = detectIntent(AppConstants.PROJECT_NAME,AppConstants.LOCATION,AppConstants.MANUAL_OR_AUDIO_AGENT,
+                "12345",query,AppConstants.LANGUAGE_CODE);
+
+        /**
+         * this implementation can be done after creating new agent
+         *
+         */
+        return val;
     }
 
     @GetMapping(value="/v1/testIntent")
@@ -104,7 +109,7 @@ public class IntentAPI {
 
         Map<String, QueryResult> map = new HashMap<>();
         try{
-        map = detectIntent(AppConstants.PROJECT_NAME,AppConstants.LOCATION,agentName,
+        map = detectIntent(AppConstants.PROJECT_NAME,AppConstants.LOCATION,AppConstants.FORM_AGENT,
                 "12345",query,AppConstants.LANGUAGE_CODE);
 
         Map<String, String> responseMap = new HashMap<>();
