@@ -13,5 +13,4 @@ public interface AppConstants {
 	final public static String MANUAL_OR_AUDIO_AGENT = "3d1f2c36-feea-4c2e-9fd8-4f217d0b2565"; // need to set
 	final public static String MATCH_TYPE = "match_type";
 	final public static String LANGUAGE_CODE = "en-US";
-	final public static String EN_US = "en-US";
 }
